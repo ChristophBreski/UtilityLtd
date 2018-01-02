@@ -1,0 +1,160 @@
+body {
+    background-color: black;
+    font-family: Arial;
+    color: white;
+}
+
+header {
+    color: darkred;
+}
+
+header table {
+    border: none;
+}
+header table tr {
+    max-height: 100px;
+    margin: 0;
+    padding: 0;
+}
+
+header table td {
+    max-height:180px;
+}
+
+header table td img {
+}
+
+header table th {
+    width: 1240px;
+    max-height: 180px;
+    font-family: Arial;
+    font-size: 250%;
+    background-image: url("backgroundheader.png");
+    margin: 0;
+    padding: 0;
+}
+
+body table {
+    width: 1240px;
+}
+
+#nav {
+    vertical-align: top;
+    width: 190px;
+}
+
+#content {
+    text-align: left;
+    vertical-align: top;
+    height: 450px;
+    padding: 10px;
+}
+
+#main-login {
+    vertical-align: middle;
+    height: 450px;
+    padding: 10px;
+}
+
+body table tr th nav {
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+}
+
+body table tr th nav ul {
+    list-style-type: none;
+    border: 1px solid;
+    border-color: khaki;
+    margin: 0;
+    padding: 0;
+}
+
+body table tr th nav ul li {
+    list-stye: none;
+    border-bottom: 1px solid khaki;
+    text-align: center;
+}
+
+body table tr th nav ul li:last-child {
+    border-bottom: none;
+}
+
+body table tr th nav ul li a {
+    font-family: Arial;
+    color: khaki;
+    text-decoration: none;
+    display: block;
+    padding: 14px 16px;
+}
+
+body table tr th nav ul li a.active {
+    background-color: khaki;
+    color: black;
+}
+
+body table tr th nav ul li a:hover {
+    background-color: grey;
+    color: black;
+}
+
+body table tr th footer {
+    text-align: center;
+    color: khaki;
+    border: 2px solid khaki;
+}
+
+#ueberschrift{
+    font-weight: bold;
+    font-size: 20px;
+    color: khaki;
+}
+
+div.table {
+    display: table;
+    border-collapse:collapse;
+}
+div.tr {
+    display:table-row;
+    border: 2px lightgrey solid;
+}
+div.td {
+    display:table-cell;
+    border: none;
+    padding:5px;
+    font-size: 16px;
+    color: lightgrey;
+}
+div.tdnumber {
+    display:table-cell;
+    border: none;
+    padding:5px;
+    font-size: 16px;
+    text-align: right;
+    color: lightgrey;
+}
+div.tdgesamt {
+    display:table-cell;
+    border: none;
+    padding:5px;
+    font-size: 18px;
+    text-align: left;
+    color: khaki;
+}
+div.tdgesamtnumber {
+     display:table-cell;
+     border: none;
+     padding:5px;
+     font-size: 18px;
+     text-align: right;
+     color:khaki;
+}
+div.th {
+    display:table-cell;
+    border: none;
+    padding:5px;
+    text-align: center;
+    color: khaki;
+    font-size: 20px;
+    min-width: 150px;
+}
