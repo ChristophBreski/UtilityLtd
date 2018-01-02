@@ -118,6 +118,15 @@ div.tr {
     display:table-row;
     border: 2px lightgrey solid;
 }
+div.tdrighttext {
+    display:table-cell;
+    border: none;
+    padding:5px;
+    font-size: 16px;
+    color: lightgrey;
+    text-align: right;
+}
+
 div.td {
     display:table-cell;
     border: none;

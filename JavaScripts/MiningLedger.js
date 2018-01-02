@@ -10,16 +10,44 @@ var results = new Array();
 var player_names = new Array("Kuschy Redeye", "nasi", "Sibelius Ronkhar", "Salvador", "Tormag Goldhand", "Zeez Exus",
     "Atlas", "Johann", "Edgar", "Kim Nocre", "Klausnn Olacar", "Korhal Schwarz", "Mel'o'Dram", "Steve Gantera",
     "D`orlosBuddlobert");
-var ice_types = new Array("Thick Blue Ice", "Dark Glitter", "Glare Crust", "Gelidus", "Krystallos", "Hauler", "Booster");
+var ice_types = new Array("Thick Blue Ice", "Dark Glitter", "Glare Crust", "Gelidus", "Krystallos");
+var bonus_tasks = new Array("Hauler", "Booster");
 var ice_ammount = new Array(0,0,0,0,0);
 var shift_chars = new Array(18,16,11,15,14);
 var ice_prices = new Array(300000, 450000, 630000, 360000, 500000);
+var average_isk_block = 0;
+var total_mining_amount = 0;
+var total_isk_amount = 0;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Event Listner which just waits until the User Press the "Senden" Button
 var button_analyse = document.getElementById("analyse")
 if(button_analyse != null)
-    button_analyse.addEventListener("click", function() {parseInput("MiningLedger")});
+    button_analyse.addEventListener("click", function() {createUserResult("MiningLedger")});
+
+//----------------------------------------------------------------------------------------------------------------------
+// This Function is the Controller for the new View
+function createUserResult(id) {
+    parseInput(id);
+
+    deleteElementById("input");
+
+    var headline_total = document.createElement("div");
+    headline_total.appendChild(document.createTextNode("Gesamtübersicht Mining OP"));
+    document.getElementById("content").appendChild(headline_total);
+    document.getElementById("content").appendChild(document.createElement("br"));
+
+    createTableTotal(total_isk_amount, total_mining_amount, average_isk_block);
+
+    var headline_player = document.createElement("div");
+    headline_player.appendChild(document.createTextNode("Spielerübersicht"));
+    document.getElementById("content").appendChild(headline_player);
+    document.getElementById("content").appendChild(document.createElement("br"));
+
+    createTablePlayer();
+
+    console.log(results);
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 // This Function Parse the Input to get the Informations Mining Amount in Total and Mining Ammount for each player
@@ -28,9 +56,6 @@ function parseInput(id) {
     var text = document.getElementById(id).value;
     var text_lines = text.split(" - ");
     var current_player = " ";
-    var mining_amount = 0;
-    var total_mining_amount = 0;
-    var total_isk_amount = 0;
 
     for(counter_lines = 0; counter_lines < text_lines.length-1;) {
 
@@ -63,7 +88,9 @@ function parseInput(id) {
         results.push({
             PlayerName: current_player,
             MiningAmount: mining_amount,
-            ISK: 0
+            ISK: 0,
+            Hauler: "no",
+            Booster: "no"
         });
     }
 
@@ -77,18 +104,6 @@ function parseInput(id) {
     for(counter_results = 0; counter_results < results.length; counter_results++) {
         results[counter_results].ISK = results[counter_results].MiningAmount * average_isk_block;
     }
-
-    console.log(results);
-
-    deleteElementById("input");
-
-    var ueberschrift = document.createElement("div");
-    ueberschrift.appendChild(document.createTextNode("Gesamtübersicht Mining OP"));
-    document.getElementById("content").appendChild(ueberschrift);
-    document.getElementById("content").appendChild(document.createElement("br"));
-
-    createTableTotal(total_isk_amount, total_mining_amount,average_isk_block);
-    createTablePlayer();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -103,7 +118,6 @@ function deleteElementById(id) {
 function createTableTotal(total_isk_amount, total_mining_amount, average_isk_block) {
     var table = document.createElement("div");
     table.className = "table";
-    table.setAttribute("id", "table_total");
 
     // Creates Table Header
     var tableheader = new Array("ICE Sorte", "Menge", "ISK Gesamt", "ISK pro Block")
@@ -177,7 +191,48 @@ function createTableTotal(total_isk_amount, total_mining_amount, average_isk_blo
 //----------------------------------------------------------------------------------------------------------------------
 // Creates the HTML Table with the Player information for the Mining Event
 function createTablePlayer() {
+    var table = document.createElement("div");
+    table.className = "table";
 
+    // Create Table Header
+    var tableheader = new Array("Name", "Amount", "ISK", "Hauler", "Booster");
+    var lines = document.createElement("div");
+    lines.className = "tr";
+
+    for (counter_rows = 0; counter_rows < tableheader.length; counter_rows++) {
+        var row = document.createElement("div");
+        row.className = "th";
+        row.appendChild(document.createTextNode(tableheader[counter_rows]));
+        lines.appendChild(row);
+    }
+    table.appendChild(lines);
+
+    // Create Table Content
+    for(counter_lines = 0; counter_lines < results.length; counter_lines++) {
+        lines = document.createElement("div");
+        lines.className = "tr";
+        for(var key in results[counter_lines]) {
+            var row = document.createElement("div");
+            var value = results[counter_lines][key];
+
+            if(key == "PlayerName") {
+                row.className = "td";
+                row.appendChild(document.createTextNode(value));
+            }
+            else if(key == "Hauler" || key =="Booster") {
+                row.className = "tdrighttext";
+                row.appendChild(document.createTextNode(value));
+            }
+            else{
+                row.className = "tdnumber";
+                row.appendChild(document.createTextNode(makePrettyNumber(value)));
+            }
+            lines.appendChild(row);
+        }
+        table.append(lines);
+    }
+
+    document.getElementById("content").appendChild(table);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
